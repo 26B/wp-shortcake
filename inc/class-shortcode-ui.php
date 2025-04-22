@@ -62,7 +62,7 @@ class Shortcode_UI {
 	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self;
+			self::$instance = new self();
 			self::$instance->setup_actions();
 		}
 		return self::$instance;
@@ -73,8 +73,8 @@ class Shortcode_UI {
 	 */
 	private function __construct() {
 		$this->plugin_version = SHORTCODE_UI_VERSION;
-		$this->plugin_dir     = plugin_dir_path( dirname( __FILE__ ) );
-		$this->plugin_url     = plugin_dir_url( dirname( __FILE__ ) );
+		$this->plugin_dir     = plugin_dir_path( __DIR__ );
+		$this->plugin_url     = plugin_dir_url( __DIR__ );
 	}
 
 	/**
@@ -176,7 +176,6 @@ class Shortcode_UI {
 
 		// Setup filter to handle decoding encoded attributes.
 		add_filter( "shortcode_atts_{$shortcode_tag}", array( $this, 'filter_shortcode_atts_decode_encoded' ), 5, 3 );
-
 	}
 
 	/**
@@ -222,7 +221,6 @@ class Shortcode_UI {
 					$shortcodes[ $shortcode ]['inner_content'][ $field ] = wp_kses_post( $args['inner_content'][ $field ] );
 				}
 			}
-
 		}
 
 		return $shortcodes;
@@ -266,7 +264,8 @@ class Shortcode_UI {
 		wp_register_script(
 			self::$select2_handle,
 			trailingslashit( $this->plugin_url ) . "lib/select2/js/select2.full{$min}.js",
-			array( 'jquery', 'jquery-ui-sortable' ), '4.0.3'
+			array( 'jquery', 'jquery-ui-sortable' ),
+			'4.0.3'
 		);
 
 		if ( 'select2' !== self::$select2_handle ) {
@@ -277,7 +276,8 @@ class Shortcode_UI {
 		wp_register_style(
 			self::$select2_handle,
 			trailingslashit( $this->plugin_url ) . "lib/select2/css/select2{$min}.css",
-			null, '4.0.3'
+			null,
+			'4.0.3'
 		);
 	}
 
@@ -315,7 +315,9 @@ class Shortcode_UI {
 		wp_enqueue_script( 'shortcode-ui', $this->plugin_url . 'js/build/shortcode-ui.js', array( 'jquery', 'backbone', 'mce-view', 'shortcode-ui-js-hooks' ), $this->plugin_version );
 		wp_enqueue_style( 'shortcode-ui', $this->plugin_url . 'css/shortcode-ui.css', array(), $this->plugin_version );
 		wp_localize_script(
-			'shortcode-ui', ' shortcodeUIData', array(
+			'shortcode-ui',
+			' shortcodeUIData',
+			array(
 				'shortcodes'     => $shortcodes,
 				'strings'        => array(
 					'media_frame_title'                 => __( 'Insert Post Element', 'shortcode-ui' ),
@@ -504,7 +506,6 @@ class Shortcode_UI {
 			wp_send_json_success( $responses );
 			exit;
 		}
-
 	}
 
 	/**
@@ -539,7 +540,5 @@ class Shortcode_UI {
 		}
 
 		return $out;
-
 	}
-
 }

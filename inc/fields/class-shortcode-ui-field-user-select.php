@@ -23,7 +23,7 @@ class Shortcode_UI_Field_User_Select {
 	public static function get_instance() {
 
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self;
+			self::$instance = new self();
 			self::$instance->setup_actions();
 		}
 		return self::$instance;
@@ -62,7 +62,9 @@ class Shortcode_UI_Field_User_Select {
 		wp_enqueue_style( Shortcode_UI::$select2_handle );
 
 		wp_localize_script(
-			'shortcode-ui', 'shortcodeUiUserFieldData', array(
+			'shortcode-ui',
+			'shortcodeUiUserFieldData',
+			array(
 				'nonce' => wp_create_nonce( 'shortcode_ui_field_user_select' ),
 			)
 		);
@@ -179,5 +181,4 @@ class Shortcode_UI_Field_User_Select {
 
 		wp_send_json_success( $response );
 	}
-
 }

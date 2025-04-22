@@ -71,7 +71,7 @@ class Shortcode_UI_Fields {
 	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self;
+			self::$instance = new self();
 			self::$instance->setup_actions();
 		}
 		return self::$instance;
@@ -98,11 +98,10 @@ class Shortcode_UI_Fields {
 
 		// set default args for each field.
 		$array_map = array();
-		foreach ($this->fields as $field_name => $field) {
+		foreach ( $this->fields as $field_name => $field ) {
 			$array_map[ $field_name ] = wp_parse_args( $field, $this->field_defaults );
 		}
 		$this->fields = $array_map;
-
 	}
 
 	/**
@@ -120,5 +119,4 @@ class Shortcode_UI_Fields {
 	public function action_enqueue_shortcode_ui() {
 		wp_localize_script( 'shortcode-ui', 'shortcodeUIFieldData', $this->fields );
 	}
-
 }

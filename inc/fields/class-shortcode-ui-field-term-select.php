@@ -21,7 +21,7 @@ class Shortcode_UI_Field_Term_Select {
 	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self;
+			self::$instance = new self();
 			self::$instance->setup_actions();
 		}
 		return self::$instance;
@@ -56,7 +56,9 @@ class Shortcode_UI_Field_Term_Select {
 		wp_enqueue_style( Shortcode_UI::$select2_handle );
 
 		wp_localize_script(
-			'shortcode-ui', 'shortcodeUiTermFieldData', array(
+			'shortcode-ui',
+			'shortcodeUiTermFieldData',
+			array(
 				'nonce' => wp_create_nonce( 'shortcode_ui_field_term_select' ),
 			)
 		);

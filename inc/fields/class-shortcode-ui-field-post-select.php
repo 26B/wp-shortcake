@@ -21,7 +21,7 @@ class Shortcode_UI_Field_Post_Select {
 	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self;
+			self::$instance = new self();
 			self::$instance->setup_actions();
 		}
 		return self::$instance;
@@ -33,7 +33,6 @@ class Shortcode_UI_Field_Post_Select {
 		add_action( 'enqueue_shortcode_ui', array( $this, 'action_enqueue_shortcode_ui' ) );
 		add_action( 'wp_ajax_shortcode_ui_post_field', array( $this, 'action_wp_ajax_shortcode_ui_post_field' ) );
 		add_action( 'shortcode_ui_loaded_editor', array( $this, 'action_shortcode_ui_loaded_editor' ) );
-
 	}
 
 	public function filter_shortcode_ui_fields( $fields ) {
@@ -46,11 +45,12 @@ class Shortcode_UI_Field_Post_Select {
 		wp_enqueue_style( Shortcode_UI::$select2_handle );
 
 		wp_localize_script(
-			'shortcode-ui', 'shortcodeUiPostFieldData', array(
+			'shortcode-ui',
+			'shortcodeUiPostFieldData',
+			array(
 				'nonce' => wp_create_nonce( 'shortcode_ui_field_post_select' ),
 			)
 		);
-
 	}
 
 	/**
@@ -169,7 +169,5 @@ class Shortcode_UI_Field_Post_Select {
 		$response['items_per_page'] = $query->query_vars['posts_per_page'];
 
 		wp_send_json_success( $response );
-
 	}
-
 }

@@ -43,7 +43,7 @@ class Shortcode_UI_Field_Attachment {
 	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self;
+			self::$instance = new self();
 			self::$instance->setup_actions();
 		}
 		return self::$instance;
@@ -74,7 +74,9 @@ class Shortcode_UI_Field_Attachment {
 	public function action_enqueue_shortcode_ui() {
 
 		wp_localize_script(
-			'shortcode-ui', 'ShortcakeImageFieldData', array(
+			'shortcode-ui',
+			'ShortcakeImageFieldData',
+			array(
 				'defaultArgs' => array(
 					'libraryType' => null, // array of mime types. eg image, image/jpg, application, application/pdf.
 					'addButton'   => __( 'Select Attachment', 'shortcode-ui' ),

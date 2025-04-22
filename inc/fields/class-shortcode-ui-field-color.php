@@ -43,7 +43,7 @@ class Shortcode_UI_Field_Color {
 	 */
 	public static function get_instance() {
 		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self;
+			self::$instance = new self();
 			self::$instance->setup_actions();
 		}
 		return self::$instance;
@@ -127,5 +127,4 @@ class Shortcode_UI_Field_Color {
 
 		<?php
 	}
-
 }
