@@ -4,9 +4,6 @@ class Shortcode_UI_Field_Post_Select {
 
 	private static $instance;
 
-	// All registered post fields.
-	private $post_fields = array();
-
 	// Field Settings.
 	private $fields = array(
 		'post_select' => array(
@@ -83,7 +80,7 @@ class Shortcode_UI_Field_Post_Select {
 	 * Ajax handler for select2 post field queries.
 	 * Output JSON containing post data.
 	 * Requires that shortcode, attr and nonce are passed.
-	 * Requires that the field has been correctly registred and can be found in $this->post_fields
+	 * Requires that the field has been correctly registred and can be found in $this->fields
 	 * Supports passing page number and search query string.
 	 *
 	 * @return null

@@ -4,9 +4,6 @@ class Shortcode_UI_Field_User_Select {
 
 	private static $instance;
 
-	// All registered user fields.
-	private $user_fields = array();
-
 	// Field Settings.
 	private $fields = array(
 		'user_select' => array(
@@ -100,7 +97,7 @@ class Shortcode_UI_Field_User_Select {
 	 * Ajax handler for select2 user field queries.
 	 * Output JSON containing user data.
 	 * Requires that shortcode, attr and nonce are passed.
-	 * Requires that the field has been correctly registered and can be found in $this->post_fields
+	 * Requires that the field has been correctly registered and can be found in $this->fields
 	 * Supports passing page number and search query string.
 	 *
 	 * @return null

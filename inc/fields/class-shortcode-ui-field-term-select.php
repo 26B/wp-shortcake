@@ -4,9 +4,6 @@ class Shortcode_UI_Field_Term_Select {
 
 	private static $instance;
 
-	// All registered post fields.
-	private $post_fields = array();
-
 	// Field Settings.
 	private $fields = array(
 		'term_select' => array(
@@ -94,7 +91,7 @@ class Shortcode_UI_Field_Term_Select {
 	 * Ajax handler for select2 post field queries.
 	 * Output JSON containing post data.
 	 * Requires that shortcode, attr and nonce are passed.
-	 * Requires that the field has been correctly registered and can be found in $this->post_fields
+	 * Requires that the field has been correctly registered and can be found in $this->fields
 	 * Supports passing page number and search query string.
 	 *
 	 * @return null

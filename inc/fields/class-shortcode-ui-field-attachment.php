@@ -14,14 +14,6 @@ class Shortcode_UI_Field_Attachment {
 	private static $instance;
 
 	/**
-	 * All registered post fields.
-	 *
-	 * @access private
-	 * @var array
-	 */
-	private $post_fields = array();
-
-	/**
 	 * Settings for the Attachment Field.
 	 *
 	 * @access private
