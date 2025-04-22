@@ -3,8 +3,8 @@
  * Plugin Name: Shortcake (Shortcode UI)
  * Version: 0.7.4
  * Description: User Interface for adding shortcodes.
- * Author: Fusion Engineering and community
- * Author URI: http://next.fusion.net/tag/shortcode-ui/
+ * Author: 26B
+ * Author URI: https://26b.io
  * Text Domain: shortcode-ui
  * License: GPL v2 or later
  *

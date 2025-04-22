@@ -1,8 +1,8 @@
 {
-    "name": "fusioneng/shortcake",
+    "name": "26b/wp-shortcake",
     "description": "Shortcake makes using WordPress shortcodes a piece of cake.",
     "type": "wordpress-plugin",
-    "homepage": "https://github.com/fusioneng/Shortcake",
+    "homepage": "https://github.com/26b/wp-shortcake",
     "license": "GPL-2.0+",
     "authors": [
         {
@@ -11,13 +11,20 @@
             "homepage": "http://fusion.net"
         }
     ],
+    "require": {
+      "php": ">=8.1"
+    },
     "require-dev": {
-        "squizlabs/php_codesniffer": "3.2.2",
-        "wp-coding-standards/wpcs": "0.14.0"
+        "squizlabs/php_codesniffer": "^3.10",
+        "wp-coding-standards/wpcs": "^3.1"
     },
     "scripts": {
         "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs",
         "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths vendor/wp-coding-standards/wpcs"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }
-
