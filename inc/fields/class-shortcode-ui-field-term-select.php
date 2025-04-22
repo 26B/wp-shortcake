@@ -155,7 +155,7 @@ class Shortcode_UI_Field_Term_Select {
 			$response['terms_per_page'] = 10;
 		}
 
-		$num_results = wp_count_terms( $taxonomy_type, $args );
+		$num_results = wp_count_terms( $args );
 
 		if ( empty( $num_results ) ) {
 			wp_send_json_error();
