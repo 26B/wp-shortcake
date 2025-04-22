@@ -175,7 +175,7 @@ class Shortcode_UI {
 		$this->shortcodes[ $shortcode_tag ] = $args;
 
 		// Setup filter to handle decoding encoded attributes.
-		add_filter( "shortcode_atts_{$shortcode_tag}", array( $this, 'filter_shortcode_atts_decode_encoded' ), 5, 3 );
+		add_filter( "shortcode_atts_{$shortcode_tag}", array( $this, 'filter_shortcode_atts_decode_encoded' ), 5 );
 	}
 
 	/**
@@ -253,10 +253,8 @@ class Shortcode_UI {
 	 * Enqueue scripts and styles used in the admin.
 	 *
 	 * Editor styles needs to be added before wp_enqueue_editor.
-	 *
-	 * @param array $editor_supports Whether or not the editor being enqueued has 'tinymce' or 'quicktags'
 	 */
-	public function action_admin_enqueue_scripts( $editor_supports ) {
+	public function action_admin_enqueue_scripts() {
 		add_editor_style( trailingslashit( $this->plugin_url ) . 'css/shortcode-ui-editor-styles.css' );
 
 		$min = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
@@ -265,7 +263,8 @@ class Shortcode_UI {
 			self::$select2_handle,
 			trailingslashit( $this->plugin_url ) . "lib/select2/js/select2.full{$min}.js",
 			array( 'jquery', 'jquery-ui-sortable' ),
-			'4.0.3'
+			'4.0.3',
+			false
 		);
 
 		if ( 'select2' !== self::$select2_handle ) {
@@ -311,8 +310,8 @@ class Shortcode_UI {
 		// Load minified version of wp-js-hooks if not debugging.
 		$wp_js_hooks_file = 'wp-js-hooks' . ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min' ) . '.js';
 
-		wp_enqueue_script( 'shortcode-ui-js-hooks', $this->plugin_url . 'lib/wp-js-hooks/' . $wp_js_hooks_file, array(), '2015-03-19' );
-		wp_enqueue_script( 'shortcode-ui', $this->plugin_url . 'js/build/shortcode-ui.js', array( 'jquery', 'backbone', 'mce-view', 'shortcode-ui-js-hooks' ), $this->plugin_version );
+		wp_enqueue_script( 'shortcode-ui-js-hooks', $this->plugin_url . 'lib/wp-js-hooks/' . $wp_js_hooks_file, array(), '2015-03-19', false );
+		wp_enqueue_script( 'shortcode-ui', $this->plugin_url . 'js/build/shortcode-ui.js', array( 'jquery', 'backbone', 'mce-view', 'shortcode-ui-js-hooks' ), $this->plugin_version, false );
 		wp_enqueue_style( 'shortcode-ui', $this->plugin_url . 'css/shortcode-ui.css', array(), $this->plugin_version );
 		wp_localize_script(
 			'shortcode-ui',
@@ -385,9 +384,11 @@ class Shortcode_UI {
 	 */
 	public function action_admin_print_footer_scripts() {
 
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->get_view( 'media-frame' ); // WPCS: xss ok
 		echo $this->get_view( 'list-item' ); // WPCS: xss ok
 		echo $this->get_view( 'edit-form' ); // WPCS: xss ok
+		// phpcs:enable
 
 		/**
 		 * Fires after base shortcode UI templates have been loaded.
@@ -512,11 +513,9 @@ class Shortcode_UI {
 	 * Decode any encoded attributes.
 	 *
 	 * @param array $out   The output array of shortcode attributes.
-	 * @param array $pairs The supported attributes and their defaults.
-	 * @param array $atts  The user defined shortcode attributes.
 	 * @return array $out  The output array of shortcode attributes.
 	 */
-	public function filter_shortcode_atts_decode_encoded( $out, $pairs, $atts ) {
+	public function filter_shortcode_atts_decode_encoded( $out ) {
 
 		// Get current shortcode tag from the current filter
 		// by stripping `shortcode_atts_` from start of string.
